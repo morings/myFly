@@ -4,6 +4,7 @@ import {BackGround} from "./js/runtime/BackGround.js"
 import {BeginButton} from "./js/player/BeginButton.js"
 import {Hero} from "./js/player/Hero.js"
 import {Director} from "./js/Director.js"
+import {Score} from "./js/player/Score.js"
 
 export class Main{
   constructor(){ 
@@ -41,15 +42,11 @@ export class Main{
     this.director.isGameOver = false;
     this.dataStore.put('background', BackGround);
     this.dataStore.put('hero', Hero);
+    this.dataStore.put('score', Score);
     this.dataStore.put('bullets', []);
     this.dataStore.put('enemys', []);
-    this.director.run() 
-    this.director.time1 = setInterval(() => {
-      this.director.createBullet()
-    }, 200);
-    this.director.time2 = setInterval(() => {
-      this.director.createEnemy()
-    }, 200);
+    this.director.frame = 0;
+    this.director.run();
   }   
   initEvent(){
     wx.onTouchStart((res)=>{

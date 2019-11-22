@@ -38,13 +38,18 @@ export class Director {
     this.check()//监测碰撞
     if(!this.isGameOver){
       this.dataStore.get('background').draw();
-      this.dataStore.get('hero').draw();
-       this.dataStore.get('bullets').forEach((item)=>{
+      this.dataStore.get('hero').draw();    
+      if(this.frame%20==0){
+        this.createEnemy()
+        this.createBullet();
+      }
+      this.dataStore.get('bullets').forEach((item)=>{
         item.draw()
       })
       this.dataStore.get('enemys').forEach((item)=>{
         item.draw()
       })
+      this.dataStore.get('score').draw();
       this.timer = requestAnimationFrame(() => this.run());
       this.dataStore.get('bullets').forEach((item)=>{
         item.update()
@@ -52,12 +57,11 @@ export class Director {
       this.dataStore.get('enemys').forEach((item)=>{
         item.update()
       })
-      this.collisionDetection()
+      this.collisionDetection();
+      this.frame++
     }else{
       cancelAnimationFrame(this.timer);
-      clearInterval(this.time1);
-      clearInterval(this.time2);
-      
+      this.dataStore.get('score').draw();    
     }
     
   }
@@ -81,13 +85,26 @@ export class Director {
     var bullets = this.dataStore.get('bullets');
     var enemys = this.dataStore.get('enemys');
     for(let bullet of bullets){
+      let bulletborder = {
+        top:bullet.y,
+        left:bullet.x,
+        bottom:bullet.y+bullet.height,
+        right:bullet.x+bullet.width
+      }
       for(let enemy of enemys){
-        if((bullet.x+bullet.width)>enemy.x && bullet.x<(enemy.x+enemy.width) && (bullet.y+bullet.height)>enemy.y && bullet.y<(enemy.y+enemy.height) && !enemy.noShow && !bullet.noShow){
+        let enemyborder = {
+          top:enemy.y,
+          left:enemy.x,
+          bottom:enemy.y+enemy.height,
+          right:enemy.x+enemy.width
+        }
+        if( bulletborder.top>enemyborder.bottom || bulletborder.bottom<enemyborder.top || bulletborder.right<enemyborder.left || bulletborder.left>enemyborder.right || enemy.noShow || bullet.noShow){
+          
+        }else{
           bullet.noShow = true;
           enemy.noShow = true;
-          this.playBoom()
-        }else{
-
+          this.playBoom();
+          this.dataStore.get('score').scoreNum++
         }
       }
     }
