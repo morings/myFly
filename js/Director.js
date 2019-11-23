@@ -71,6 +71,7 @@ export class Director {
     for(let enemy of enemys){
       if((hero.x+hero.width)>enemy.x && hero.x<(enemy.x+enemy.width) && (hero.y+hero.height)>enemy.y && hero.y<(enemy.y+enemy.height) && !enemy.noShow && !hero.noShow){
         this.isGameOver = true;
+        this.dataStore.get('gameOver').draw()
       }
     }
     

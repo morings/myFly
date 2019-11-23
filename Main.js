@@ -5,6 +5,7 @@ import {BeginButton} from "./js/player/BeginButton.js"
 import {Hero} from "./js/player/Hero.js"
 import {Director} from "./js/Director.js"
 import {Score} from "./js/player/Score.js"
+import {GameOver} from "./js/player/GameOver.js"
 
 export class Main{
   constructor(){ 
@@ -45,6 +46,7 @@ export class Main{
     this.dataStore.put('score', Score);
     this.dataStore.put('bullets', []);
     this.dataStore.put('enemys', []);
+    this.dataStore.put('gameOver', GameOver);
     this.director.frame = 0;
     this.director.run();
   }   

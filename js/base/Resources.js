@@ -18,4 +18,5 @@ export const Resources = [
   ['explosion10','res/explosion10.png'],
   ['explosion11','res/explosion11.png'],
   ['explosion12','res/explosion12.png'],
+  ['Common','res/Common.png'],
 ];
